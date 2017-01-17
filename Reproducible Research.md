@@ -3,6 +3,9 @@ Reproducible Research
 author: Vicki Hertzberg
 date: 18 January, 2017
 autosize: true
+transition: fade
+transition-speed: faster
+
 
 ========================================================
 
@@ -27,7 +30,7 @@ Conceptual replication (reproducibility)
 Reproducibility
 
 - Bridges gap between replication and letting the study stand alone
-- take data/code and replicate findings -> validate findings
+- Take data/code and replicate findings -> validate findings
 - Why do we need reproducible research?
   - New technologies increase data throughput while adding complexities and dimensions to data 
   - Existing databases merged into bigger collection of data
@@ -44,6 +47,8 @@ Tools for literate programming that we will use:
 
 - R Markdown (Rmd)
 - knitr (this will work under the hood, so to speak)
+- Git
+- GitHub
 
 ========================================================
 
@@ -75,7 +80,7 @@ Same experimental procedure?
 
 Same results?
 
-- Idential output down to the bit level
+- Identical output down to the bit level
 - Exactly the same numbers
 - Exactly the same numbers when run on similar machine
 - Numbers that are within some bound of error
@@ -144,9 +149,9 @@ Tools used at the Publication and Education Levels:
 
 LaTeX, Google Docs, MS Word, MS Powerpoint
 
-With the exception of LaTeX,
+With the exception of LaTeX, these have
 - poor integration with VCSs
-- ill-suited for workflow automation (i.e., lots of cutting and pasting, with potentil for errors)
+- ill-suited for workflow automation (i.e., lots of cutting and pasting, with potential for errors)
 
 =========================================================
 
@@ -176,7 +181,7 @@ http://www.biostat.jhsph.edu/~rpeng/research.html
 ======================================================
 Literate Statistical Analysis (Rossini)
 
-Process of ensuring data analysis is cear and transparent in terms of describing programs used to generate results.
+Process of ensuring data analysis is clear and transparent in terms of describing programs used to generate results.
 
 Extends beyond the Literate Programming paradigm to 
 
@@ -207,3 +212,143 @@ Reluctance to Share Code and Data (Borgman, 2007)
 4. Intellectual property issues
 
 One way around reasons 1 and 2: http://www.runmycode.org/home
+
+========================================================
+
+Reproducible Research Checklist
+
+- Are we doing good science?
+- Was any part of this done by hand?
+  - If so, are those parts precisely documented?
+  - Does the documentation match reality?
+- Have we taught a computer to do as much as possible?
+- Are we using a version control system?
+- Have we documented our software environment?
+- Have we saved any output that we cannot reconstruct from original data + code?
+- How far back in the analysis pipeline can we go before our results are no longer (automatically) reproducible?
+
+=======================================================
+
+Do's and Don't's for Reproducible Research
+
+=======================================================
+
+Do's
+
+- Start with good science
+- Teach a computer
+- Use version control
+- Keep track of software environment
+- Set random number generator seed
+- Think about the entire pipeline
+
+========================================================
+
+Start with Good Science
+
+- work on interesting problem (to you and your team)
+- form coherent / focused question to simplify your problem
+- collaborate with others to reinforce good practices and habits
+
+==========================================================
+
+Teach a Computer
+
+- automate all tasks through scripting or programming
+- code = precise instructions to process /  analyze the data
+- teach the computer almost guarantees reproducibility
+- download.file("url", "filename") is convenient way to download the file
+  - full URL specified instead of a series of links and clicks
+  - name of file specified
+  - directory specified
+  - code can be executed in R as long as link works
+  
+==========================================================
+
+Use Version Control
+
+- GitHub, BitBucket, Google Code, CodePlex, SourceForge
+- the use helps to slow you down
+  - forces you to think about changes made, commit those changes, and keep track of analyses performed 
+- helps to keep track of history / snapshots
+- allows reverting to old versions
+
+===========================================================
+
+
+Keep Track of Software Environment
+
+- Some tools / datasets only work on certain software or in certain environments
+  - software and computing environment are critical to reproducing analysis
+  - everything should be documented
+- Computer architecture: CPU (Intel, AMD, ARM), GPUs, 32 v 64 bit
+- Operating system: Windows, Mac, Linux/Unix
+- Software toolchain: compilers, interpreters, command shell, programming languages (C, Perl, Python, etc.), database backends, data analysis software
+- Supporting software / infrastructure: Libraries, R packages, dependencies
+- External dependencies: web sites, data repositories (data source), remote databases, software repositories
+- Version numbers: ideally, for everything (if possible)
+- Use sessionInfo() - this prints R version, OS, local and base/attached/utilized packages
+
+=============================================================
+
+Set Random Number Generator Seed
+
+- random number generators produce pseudo-random numbers based on an initial seed
+  set.seed() can be used to specify the seed for random generator in R
+- setting seed allows for the stream of random numbers to be reproduced
+- whenever you need to generate a stream for random numbers for non-trivial purposes, always set the seed
+
+=============================================================
+
+Think about the Entire Pipeline
+
+- Data analysis is a lengthy process, important to ensure each piece is reproducible
+  - Final product is important, but the process is just as important
+- Raw data -> processed data -> analysis -> report
+- The more of the pipeline is made reproducible, the more cridible the results are
+
+=============================================================
+
+Don't's
+
+- Don't do things by hand
+- Don't point and click
+- Don't save output for convenience
+
+=============================================================
+
+Don't Do Things by Hand
+
+- may lead to unreproducible results (or errors)
+  - edit spreadsheets in Excel
+  - remove outliers without noting criteria
+  - edit tables / figures
+  - validate / quality control for data
+- downloading data from website (clickin on link)
+  - need lengthy set of instructions to obtain the same dataset
+- moving / splitting / reformatting data without record of what was done
+- if necessary, document manual tasks precisely, accounting for end users with different backgrounds or from different context
+
+===============================================================
+
+Don't Point and Click
+
+- GUIs make it easier to do this
+  - GUIs are intuitive to use by actions are difficult to track and for others to reproduce
+  - some GUIs include log files that can be used for review
+- any interactive software should be carefully used to ensure all results can be reproduced
+- text editors are usually ok
+- when in doubt, document
+
+================================================================
+
+Don't Save Output for Convenience
+
+- Avoid saving data analysis output
+  - Tables, summaries, figures, processed data
+- Output that is saved as stand-alone without code is not reproducible
+- When data changes or error detected in parts of the analysis the output that is dependent on the original output will not be updated
+- Intermediate files (processed data) are ok to save but clear and precise documentation must be created
+- You should save the data + code instead of the output
+
+================================================================
