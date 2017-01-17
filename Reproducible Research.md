@@ -13,6 +13,10 @@ The keystones of science are replicability and reproducibility.
 
 http://www.economist.com/node/21528593
 
+No more cut and paste ever!
+
+https://www.youtube.com/watch?v=s3JldKoA0zw&feature=youtu.be
+
 ========================================================
 
 Direct replicability 
