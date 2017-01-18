@@ -1,16 +1,119 @@
 ---
-title: "HW 1"
-output: github_document
-author: "Vicki Hertzberg"
+title: "HW1: An Exploration of the Gapminder DataSet, and My First R Markdown Experience"
+author: "VIcki Hertzberg"
+date: "January 18, 2017"
+output: html_document
 ---
+
+The link to this file is as follows: 
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(gapminder)
 ```
-## What am I doing?
 
-The gapminder dataset is built into the gapminder package. Here is its summary:
-  
-```{r gm}
-names(gapminder)
+## Gapminder Example
+
+We are working with the gapminder dataset. Here is a summary of the data.
+
+```{r gapminder}
+summary(gapminder)
 ```
+
+There are 1704 observatons with 6 variables. The names of the variables are `r names(gapminder)`.
+
+Oh cool, I made that last sentence with an inline r command. Neat, huh!
+
+Here is the structure of the dataset:
+
+```{r}
+str(gapminder)
+```
+
+The mean life expectancy is `r round(mean(gapminder$lifeExp), digits = 2)` and the standard deviation is `r round(sd(gapminder$lifeExp), digits = 2)`. Median life expectancy is `r round(median(gapminder$lifeExp), digits = 2)` and the number of observations is `r round(length(gapminder$lifeExp), digits = 2)`.
+
+In the little table below we see the median life expectancy by continent:
+
+```{r}
+aggregate(lifeExp ~ continent, gapminder, median)
+```
+
+Here we see the median life expectancy by year:
+
+```{r}
+aggregate(lifeExp ~ year, gapminder, median)
+```
+
+
+Here is the mean life expectancy by continent:
+
+```{r}
+aggregate(lifeExp ~ continent, gapminder, mean)
+```
+
+and the standard deviation:
+
+```{r}
+aggregate(lifeExp ~ continent, gapminder, sd)
+```
+
+Now for some plotting fabulousness:
+
+```{r}
+library(ggplot2)
+
+```
+
+```{r}
+ggplot(gapminder, aes(x=continent, y=lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+
+Above is a plot of life expectancy by continent.
+
+```{r}
+ggplot(gapminder, aes(x=continent, y=gdpPercap)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+
+Above is a plot of gross domestic product per capita.
+
+```{r}
+ggplot(gapminder, aes(x=continent, y=pop)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+
+And above is a plot of population by continent.
+
+```{r}
+# integrating the country colors into the data frame
+gap_with_colors <- data.frame(gapminder, cc=I(country_colors[match(gapminder$country, names(country_colors))]))
+
+# now a bubble plot, focusing just on Africa and Europe in 2007
+
+keepers <- with(gap_with_colors, continent %in% c("Africa", "Europe") & year == 2007)
+plot(lifeExp~ gdpPercap, gap_with_colors,
+    subset = keepers, log = "x", pch = 21,
+    cex = sqrt(gap_with_colors$pop[keepers]/pi)/1500,
+    bg = gap_with_colors$cc[keepers])
+```
+
+
+Above is a scatterplot of GDP per capita in 2007 with a dot representing each country in Asia and Europe. Presumable green is Europe and brown is Africa.
+
+```{r}
+# now a bubble plot, focusing just on the Americas and Asia in 1992
+
+keepers <- with(gap_with_colors, continent %in% c("Americas", "Asia") & year == 1992)
+plot(lifeExp~ gdpPercap, gap_with_colors,
+    subset = keepers, log = "x", pch = 21,
+    cex = sqrt(gap_with_colors$pop[keepers]/pi)/1500,
+    bg = gap_with_colors$cc[keepers])
+```
+
+
+
