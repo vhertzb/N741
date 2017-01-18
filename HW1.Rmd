@@ -5,7 +5,7 @@ date: "January 18, 2017"
 output: html_document
 ---
 
-The link to this file is as follows: 
+The file is HW1.Rmd found at the following link: [https://github.com/vhertzb/N741](https://github.com/vhertzb/N741)
 
 
 ```{r setup, include=FALSE}
