@@ -1,0 +1,16 @@
+---
+title: "HW 1"
+output: github_document
+author: "Vicki Hertzberg"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## What am I doing?
+
+The gapminder dataset is built into the gapminder package. Here is its summary:
+  
+```{r gm}
+names(gapminder)
+```
